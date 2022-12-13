@@ -2,18 +2,18 @@ resource "aws_iam_role" "lambda_assume" {
   name = "lambda-assume"
 
   assume_role_policy = jsonencode(
-  {
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid = "LambdaAssumeRole"
-        Action = "sts:AssumeRole"
-        Principal = {
-          Service = "lambda.amazonaws.com"
+    {
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Sid    = "LambdaAssumeRole"
+          Action = "sts:AssumeRole"
+          Principal = {
+            Service = "lambda.amazonaws.com"
+          }
+          Effect = "Allow"
         }
-        Effect = "Allow"
-      }
-    ]
+      ]
   })
 }
 // TODO : RM?
@@ -21,18 +21,18 @@ resource "aws_iam_role" "ec2_assume" {
   name = "ec2-assume"
 
   assume_role_policy = jsonencode(
-  {
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid = "Ec2AssumeRole"
-        Action = "sts:AssumeRole"
-        Principal = {
-          Service = "ec2.amazonaws.com"
+    {
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Sid    = "Ec2AssumeRole"
+          Action = "sts:AssumeRole"
+          Principal = {
+            Service = "ec2.amazonaws.com"
+          }
+          Effect = "Allow"
         }
-        Effect = "Allow"
-      }
-    ]
+      ]
   })
 }
 
@@ -43,18 +43,18 @@ resource "aws_iam_role" "ecs" {
   name = "bmlt-ecs"
 
   assume_role_policy = jsonencode(
-  {
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid = "Ec2AssumeRole"
-        Action = "sts:AssumeRole"
-        Principal = {
-          Service = "ec2.amazonaws.com"
+    {
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Sid    = "Ec2AssumeRole"
+          Action = "sts:AssumeRole"
+          Principal = {
+            Service = "ec2.amazonaws.com"
+          }
+          Effect = "Allow"
         }
-        Effect = "Allow"
-      }
-    ]
+      ]
   })
 }
 
@@ -78,23 +78,23 @@ resource "aws_iam_role_policy" "ecs_allow_logging_policy" {
   role = aws_iam_role.ecs.name
 
   policy = jsonencode(
-  {
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-          "logs:DescribeLogStreams"
-        ],
-        Resource = [
-          "arn:aws:logs:*:*:*"
-        ]
-      }
-    ]
-  }
+    {
+      Version = "2012-10-17",
+      Statement = [
+        {
+          Effect = "Allow",
+          Action = [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents",
+            "logs:DescribeLogStreams"
+          ],
+          Resource = [
+            "arn:aws:logs:*:*:*"
+          ]
+        }
+      ]
+    }
   )
 }
 
@@ -179,19 +179,19 @@ resource "aws_iam_role" "ecs_service" {
   name = "ecs-service"
 
   assume_role_policy = jsonencode(
-  {
-    Version = "2008-10-17"
-    Statement = [
-      {
-        Sid    = ""
-        Effect = "Allow"
-        Principal = {
-          Service = "ecs.amazonaws.com"
+    {
+      Version = "2008-10-17"
+      Statement = [
+        {
+          Sid    = ""
+          Effect = "Allow"
+          Principal = {
+            Service = "ecs.amazonaws.com"
+          }
+          Action = "sts:AssumeRole"
         }
-        Action = "sts:AssumeRole"
-      }
-    ]
-  }
+      ]
+    }
   )
 }
 
@@ -200,21 +200,21 @@ resource "aws_iam_role_policy" "ecs_service" {
   role = aws_iam_role.ecs_service.name
 
   policy = jsonencode(
-  {
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = [
-          "ec2:Describe*",
-          "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
-          "elasticloadbalancing:DeregisterTargets",
-          "elasticloadbalancing:Describe*",
-          "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
-          "elasticloadbalancing:RegisterTargets"
-        ],
-        Resource = "*"
-      }
-    ]
+    {
+      Version = "2012-10-17",
+      Statement = [
+        {
+          Effect = "Allow",
+          Action = [
+            "ec2:Describe*",
+            "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+            "elasticloadbalancing:DeregisterTargets",
+            "elasticloadbalancing:Describe*",
+            "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
+            "elasticloadbalancing:RegisterTargets"
+          ],
+          Resource = "*"
+        }
+      ]
   })
 }
