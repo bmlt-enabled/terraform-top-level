@@ -33,7 +33,7 @@ resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.bmlt.id
   port              = 443
   protocol          = "HTTPS"
-  certificate_arn   = data.aws_acm_certificate.bmltenabled_org.arn
+  certificate_arn   = aws_acm_certificate.bmlt.arn
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
 
   default_action {

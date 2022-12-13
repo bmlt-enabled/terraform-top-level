@@ -24,19 +24,3 @@ provider "aws" {
   region  = "us-east-1"
   profile = "mvana"
 }
-
-data "aws_elb_service_account" "main" {}
-
-data "aws_acm_certificate" "bmltenabled_org" {
-  domain      = "*.bmltenabled.org"
-  statuses    = ["ISSUED"]
-  most_recent = true
-}
-
-data "aws_route53_zone" "aws_bmlt_app" {
-  name = "aws.bmlt.app."
-}
-
-data "aws_secretsmanager_secret" "docker" {
-  name = "docker"
-}
